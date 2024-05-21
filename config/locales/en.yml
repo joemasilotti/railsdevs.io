@@ -530,6 +530,8 @@ en:
       hire: Hire me
       message: Message
       share: Share
+    specialty_dropdown_component:
+      specialties_placeholder: AI, Turbo Native, DevOps, etc.
     update:
       updated: Your profile was updated!
   dir: ltr

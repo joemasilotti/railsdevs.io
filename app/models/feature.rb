@@ -12,7 +12,7 @@ class Feature
     when :developer_specialties
       true
     when :developer_specialty_querying
-      !Rails.env.production?
+      true
     else
       raise "Unknown feature name: #{feature_name}"
     end

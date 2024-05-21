@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     resources :affiliates, only: %w[index create new], controller: "affiliates/registrations"
 
     resources :businesses, except: :destroy
+    resources :specialties, only: :index
 
     namespace :businesses do
       resources :hiring_invoice_requests, only: [:new, :create]

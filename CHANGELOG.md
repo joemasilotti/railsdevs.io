@@ -2,6 +2,7 @@
 
 # 2024
 
+* April 12 - Progressively enhanced combobox for developer specialties #820 @MiaSinek
 * January 19 - Add GitLab profile to Dev Profile, under Online Presence section
 
 # 2023

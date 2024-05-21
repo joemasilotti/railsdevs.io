@@ -15,3 +15,11 @@ prospect:
   bio: I am prospect developer.
   search_status: open
   profile_updated_at: <%= Time.current %>
+
+ai_developer:
+  user: ai_developer
+  name: AI Developer
+  hero: AI Developer
+  bio: I am an AI developer.
+  search_status: open
+  profile_updated_at: <%= Time.current %>

@@ -17,7 +17,7 @@
     <%= hotwire_livereload_tags %>
   </head>
 
-  <body data-controller="analytics--page-views" class="min-h-full flex flex-col">
+  <body data-controller="analytics--page-views javascript-enabled" class="min-h-full flex flex-col">
     <div class="flex-1">
       <%= render ImpersonatingBannerComponent.new %>
       <%= render NavBar::BaseComponent.new(current_user) %>

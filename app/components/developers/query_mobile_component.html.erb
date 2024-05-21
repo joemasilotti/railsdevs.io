@@ -20,18 +20,26 @@
 
         <% if Feature.enabled?(:developer_specialty_querying) %>
           <%= render Users::PaywalledComponent.new(user, nil, size: :small, title: t("developers.query_component.paywalled_search.title")) do |component| %>
-            <div data-controller="toggle" data-toggle-visibility-class="hidden" class="border-t border-gray-200 px-4 py-6">
-              <h3 class="-mx-2 -my-3 flow-root">
-                <%= render CollapseControlComponent.new(t("developers.query_component.specialties.title"), collapsed: true) %>
-              </h3>
-              <div id="role-level-filter-section" data-toggle-target="element" class="hidden pt-6">
-                <div class="space-y-6">
-                  <%= form.collection_check_boxes(:specialty_ids, specialties, :id, :name, {include_hidden: false}) do |specialty| %>
-                    <div class="flex items-center">
-                      <%= specialty.check_box class: "h-4 w-4 border-gray-300 rounded text-gray-600 focus:ring-gray-500", checked: specialty_selected?(specialty.object.id) %>
-                      <%= specialty.label class: "ml-3 pr-6 text-sm font-medium text-gray-900 whitespace-nowrap" %>
-                    </div>
-                  <% end %>
+            <div data-controller="dropdown-pill" class="mx-4 py-6 border-t border-gray-200">
+              <template class="when-javascript-enabled">
+                <%= label_tag :specialty_query, t("developers.query_component.specialties.title"), class: "block text-sm font-medium text-gray-700" %>
+                <%= render Developers::SpecialtyDropdownComponent.new(specialty_query: params[:specialty_query], turbo_frame: "specialty_dropdown_mobile") %>
+              </template>
+
+              <div data-controller="toggle" data-toggle-visibility-class="hidden" class="hide-when-javascript-enabled border-t border-gray-200 px-4 py-6">
+                <h3 class="-mx-2 -my-3 flow-root">
+                  <%= render CollapseControlComponent.new(t("developers.query_component.specialties.title"), collapsed: true) %>
+                </h3>
+
+                <div id="specialties-accordion-mobile" class="hidden" data-toggle-target="element">
+                  <div class="space-y-4 pt-6">
+                    <%= form.collection_check_boxes(:specialty_ids, specialties, :id, :name, {include_hidden: false}) do |specialty| %>
+                      <div class="flex items-center">
+                        <%= specialty.check_box checked: specialty_selected?(specialty.object.id), class: "h-4 w-4 border-gray-300 rounded text-gray-600 text-gray-600 focus:ring-gray-500", data: {"dropdown-pill-target": "checkbox"} %>
+                        <%= specialty.label class: "text-gray-500 text-sm ml-3" %>
+                      </div>
+                    <% end %>
+                  </div>
                 </div>
               </div>
             </div>

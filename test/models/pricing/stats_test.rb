@@ -5,7 +5,7 @@ class Pricing::StatsTest < ActiveSupport::TestCase
 
   test "visible developers, rounded" do
     9.times { create_developer }
-    assert_equal 11, Developer.visible.count
+    assert_equal 12, Developer.visible.count
     assert_equal 10, Pricing::Stats.new.developers
   end
 

@@ -13,28 +13,32 @@
 
     <% if Feature.enabled?(:developer_specialty_querying) %>
       <%= render Users::PaywalledComponent.new(user, nil, size: :small, title: t(".paywalled_search.title")) do |component| %>
-        <div data-controller="toggle accessibility" data-toggle-visibility-class="hidden">
-          <div class="border-t border-gray-200 py-6">
-            <h3 class="-mx-2 -my-3 flow-root">
-              <%= render CollapseControlComponent.new(t(".specialties.title"), collapsed: collapse_specialties?) do %>
-                <span aria-hidden="true">
-                  <%= render BadgeComponent.new("New!", color: :purple) %>
-                </span>
-              <% end %>
-            </h3>
-            <%= tag.div id: "specialties-accordion", "data-toggle-target": "element", class: [hidden: collapse_specialties?] do %>
-              <div class="space-y-4 pt-6">
-                <%= form.collection_check_boxes(:specialty_ids, specialties, :id, :name, {include_hidden: false}) do |specialty| %>
-                  <div class="flex items-center">
-                    <%= specialty.check_box checked: specialty_selected?(specialty.object.id), class: "h-4 w-4 border-gray-300 rounded text-gray-600 text-gray-600 focus:ring-gray-500" %>
-                    <%= specialty.label class: "text-gray-500 text-sm ml-3" %>
-                  </div>
-                <% end %>
-              </div>
+        <div class="border-t border-gray-200 py-6">
+          <h3 class="-mx-2 -my-3 flow-root">
+            <%= render CollapseControlComponent.new(t(".specialties.title"), collapsed: false) do %>
+              <span aria-hidden="true">
+                <%= render BadgeComponent.new("New!", color: :purple) %>
+              </span>
             <% end %>
+          </h3>
+          <div data-controller="dropdown-pill" data-toggle-target="element">
+            <template class="when-javascript-enabled">
+              <%= render Developers::SpecialtyDropdownComponent.new(specialty_query: params[:specialty_query]) %>
+            </template>
+            <div class="hide-when-javascript-enabled">
+              <%= tag.div id: "specialties-accordion" do %>
+                <div class="space-y-4 pt-6">
+                  <%= form.collection_check_boxes(:specialty_ids, specialties, :id, :name, {include_hidden: false}) do |specialty| %>
+                    <div class="flex items-center">
+                      <%= specialty.check_box checked: specialty_selected?(specialty.object.id), class: "h-4 w-4 border-gray-300 rounded text-gray-600 text-gray-600 focus:ring-gray-500", data: {"dropdown-pill-target": "checkbox"} %>
+                      <%= specialty.label class: "text-gray-500 text-sm ml-3" %>
+                    </div>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
           </div>
         </div>
-
         <% component.custom_paywall do %>
           <%# Intentionally render nothing for now. %>
         <% end %>

@@ -12,11 +12,20 @@ application.register("analytics--events", Analytics__EventsController)
 import Analytics__PageViewsController from "./analytics/page_views_controller.js"
 application.register("analytics--page-views", Analytics__PageViewsController)
 
+import JavascriptEnabledController from "./javascript_enabled_controller.js"
+application.register("javascript-enabled", JavascriptEnabledController)
+
 import ClipboardController from "./clipboard_controller.js"
 application.register("clipboard", ClipboardController)
 
+import DropdownPillController from "./dropdown_pill_controller.js"
+application.register("dropdown-pill", DropdownPillController)
+
 import FileUploadController from "./file_upload_controller.js"
 application.register("file-upload", FileUploadController)
+
+import Forms__AutosubmitController from "./forms/autosubmit_controller.js"
+application.register("forms--autosubmit", Forms__AutosubmitController)
 
 import Forms__KeyboardSubmitController from "./forms/keyboard_submit_controller.js"
 application.register("forms--keyboard-submit", Forms__KeyboardSubmitController)

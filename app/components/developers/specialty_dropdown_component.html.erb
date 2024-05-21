@@ -1,0 +1,52 @@
+<div class="mt-2 relative flex flex-col inline-block">
+
+  <div id="pillContainer" class="flex flex-wrap space-y-2 whitespace-nowrap" data-dropdown-pill-target="pillContainer">
+    <% @specialties.each do |specialty| %>
+      <template data-dropdown-pill-target="pillTemplate" data-specialty-id="<%= specialty.id %>">
+        <%= render "specialties/pill", specialty: specialty %>
+      </template>
+    <% end %>
+  </div>
+
+  <%= turbo_frame_tag @turbo_frame, data: {"turbo-frame": "navigation"} do %>
+    <%= form_tag specialties_path, method: "get", data: {controller: "forms--autosubmit"} do %>
+      <input name="turbo_frame" value="<%= @turbo_frame %>" type="hidden">
+
+      <%= text_field_tag "specialty_query", @specialty_query,
+        placeholder: t(".specialties_placeholder"),
+        class: "shadow-sm focus:ring-gray-500 focus:border-gray-500 block w-full pr-12 sm:text-sm border-gray-300 rounded-md mt-2",
+        id: "specialties-search-query",
+        data: {
+          action: "input->forms--autosubmit#debouncedSubmit",
+          "dropdown-pill-target": "input",
+          "turbo-permanent": "true"
+        },
+        role: "combobox",
+        aria: {
+          controls: "options",
+          expanded: "false"
+        },
+        autocomplete: "off" %>
+
+      <% if @specialty_query.present? && @specialties.any? %>
+        <ul role="listbox"
+            data-combobox-target="list"
+            data-dropdown-pill-target="dropdown"
+            class="absolute mt-1 z-10 max-h-60 w-full left-0 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm top-full">
+          <% @specialties.each do |specialty| %>
+            <li class="relative cursor-default select-none py-2 pl-3 pr-9 text-gray-900" role="option" tabindex="-1">
+              <%= tag.div highlight(specialty.name, @specialty_query),
+                id: dom_id(specialty, :search_result),
+                role: "option",
+                data: {
+                  action: "click->dropdown-pill#handleSpecialitySelection",
+                  "dropdown-pill-target": "option",
+                  value: specialty.id
+                } %>
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>
