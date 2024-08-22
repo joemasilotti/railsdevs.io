@@ -390,8 +390,8 @@ GEM
     responders (3.1.0)
       actionpack (>= 5.2)
       railties (>= 5.2)
-    rexml (3.2.7)
-      strscan (>= 3.0.9)
+    rexml (3.3.6)
+      strscan
     rinku (2.0.6)
     rubocop (1.29.1)
       parallel (~> 1.10)
